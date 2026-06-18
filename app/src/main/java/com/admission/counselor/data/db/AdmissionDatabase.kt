@@ -1,21 +1,36 @@
 package com.admission.counselor.data.db
 
 import androidx.room.Database
+import androidx.room.Entity
+import androidx.room.Fts5
+import androidx.room.PrimaryKey
 import androidx.room.RoomDatabase
 
-// Placeholder entity for scaffolding
-@androidx.room.Entity
-data class PlaceholderEntity(
-    @androidx.room.PrimaryKey val id: Int
+@Entity(tableName = "courses")
+data class CourseEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String,
+    val duration: String,
+    val fee: String,
+    val deadline: String,
+    val eligibility: String,
+    val highlights: String,
+    val why_join: String
 )
 
-@androidx.room.Dao
-interface PlaceholderDao {
-    @androidx.room.Query("SELECT * FROM PlaceholderEntity")
-    fun getAll(): List<PlaceholderEntity>
-}
+@Entity(tableName = "courses_fts")
+@Fts5(content = "courses")
+data class CourseFtsEntity(
+    val name: String,
+    val duration: String,
+    val fee: String,
+    val deadline: String,
+    val eligibility: String,
+    val highlights: String,
+    val why_join: String
+)
 
-@Database(entities = [PlaceholderEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CourseEntity::class, CourseFtsEntity::class], version = 1, exportSchema = false)
 abstract class AdmissionDatabase : RoomDatabase() {
-    abstract fun placeholderDao(): PlaceholderDao
+    abstract fun courseDao(): CourseDao
 }
