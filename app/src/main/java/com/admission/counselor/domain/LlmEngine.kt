@@ -1,0 +1,160 @@
+package com.admission.counselor.domain
+
+import android.content.Context
+import com.google.mediapipe.tasks.genai.llminference.LlmInference
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.withContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
+
+enum class ThermalPolicy {
+    FULL_SPEED,
+    THROTTLED,
+    DEGRADED
+}
+
+class EngineBusyException(message: String) : Exception(message)
+
+@Singleton
+class LlmEngine @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
+    private val sessionMutex = Mutex()
+    private var inferenceEngine: LlmInference? = null
+    private var activeChannel: Channel<String>? = null
+    private var modelPath: String? = null
+    
+    private var thermalPolicy = ThermalPolicy.FULL_SPEED
+    private var currentBackend: LlmInference.Backend? = null
+
+    /**
+     * Set the path to the model file resolved from Play Asset Delivery.
+     */
+    suspend fun loadModel(path: String) = withContext(LlmThread.dispatcher) {
+        modelPath = path
+    }
+
+    /**
+     * Updates the thermal policy from the system listener.
+     */
+    fun setThermalPolicy(policy: ThermalPolicy) {
+        this.thermalPolicy = policy
+    }
+
+    /**
+     * Executes the formatted prompt against the model. Yields chunks as they are generated.
+     * Throws [EngineBusyException] immediately if the engine is already generating.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun generateResponse(prompt: String): Flow<String> = flow {
+        if (!sessionMutex.tryLock()) {
+            throw EngineBusyException("Counselor is busy formulating a response")
+        }
+        val startTime = System.currentTimeMillis()
+        var firstTokenReceived = false
+        var tokenCount = 0
+        try {
+            val engine = getOrInitializeEngine()
+            val channel = Channel<String>(Channel.UNLIMITED)
+            activeChannel = channel
+
+            // Start streaming inference
+            engine.generateResponseAsync(prompt)
+
+            for (token in channel) {
+                if (!firstTokenReceived) {
+                    val ttft = System.currentTimeMillis() - startTime
+                    android.util.Log.d("LlmEngineDiagnostics", "Time to First Token (TTFT): ${ttft}ms")
+                    firstTokenReceived = true
+                }
+                tokenCount++
+                emit(token)
+                
+                // If thermal state is throttled, introduce a 40ms pause between tokens
+                if (thermalPolicy == ThermalPolicy.THROTTLED) {
+                    kotlinx.coroutines.delay(40)
+                }
+            }
+            
+            val totalTime = System.currentTimeMillis() - startTime
+            val throughput = if (totalTime > 0) (tokenCount.toFloat() / (totalTime.toFloat() / 1000f)) else 0f
+            android.util.Log.d("LlmEngineDiagnostics", "Generation completed: $tokenCount tokens generated in ${totalTime}ms (Throughput: ${String.format("%.2f", throughput)} tokens/sec)")
+        } finally {
+            activeChannel = null
+            sessionMutex.unlock()
+        }
+    }.flowOn(LlmThread.dispatcher)
+
+    /**
+     * Cancels active generation by closing the token channel and
+     * closing the native instance (since MediaPipe lacks a native cancel API).
+     */
+    suspend fun cancelGeneration() = withContext(LlmThread.dispatcher) {
+        activeChannel?.close(CancellationException("User cancelled generation"))
+        activeChannel = null
+        inferenceEngine?.close()
+        inferenceEngine = null
+    }
+
+    /**
+     * Unloads the engine from RAM to free native resources.
+     */
+    suspend fun close() = withContext(LlmThread.dispatcher) {
+        activeChannel?.close(CancellationException("Model unloading"))
+        activeChannel = null
+        inferenceEngine?.close()
+        inferenceEngine = null
+    }
+
+    private fun getOrInitializeEngine(): LlmInference {
+        val path = modelPath ?: throw IllegalStateException("Model path has not been set.")
+        
+        // Select preferred backend based on thermal status
+        val preferredBackend = if (thermalPolicy == ThermalPolicy.DEGRADED) {
+            LlmInference.Backend.CPU
+        } else {
+            LlmInference.Backend.GPU
+        }
+
+        // Re-initialize engine if hardware acceleration delegate preference has changed
+        if (inferenceEngine != null && currentBackend != preferredBackend) {
+            inferenceEngine?.close()
+            inferenceEngine = null
+        }
+
+        if (inferenceEngine == null) {
+            val options = LlmInference.LlmInferenceOptions.builder()
+                .setModelPath(path)
+                .setTemperature(0.2f)
+                .setTopK(40)
+                .setMaxTokens(1546)
+                .setPreferredBackend(preferredBackend)
+                .setResultListener { partialResult, done ->
+                    val channel = activeChannel
+                    if (channel != null) {
+                        if (done) {
+                            channel.close()
+                        } else if (partialResult != null) {
+                            channel.trySend(partialResult)
+                        }
+                    }
+                }
+                .setErrorListener { error ->
+                    activeChannel?.close(error)
+                }
+                .build()
+            
+            inferenceEngine = LlmInference.createFromOptions(context, options)
+            currentBackend = preferredBackend
+            android.util.Log.d("LlmEngineDiagnostics", "LiteRT-LM engine initialized with backend: $preferredBackend")
+        }
+        return inferenceEngine!!
+    }
+}

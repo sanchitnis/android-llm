@@ -23,7 +23,7 @@ This board tracks the progress of the phase-by-phase loop-engineering workflow f
 | **Sprint 3** | On-Device RAG & Context Management | COMPLETED |
 | **Sprint 4** | LiteRT-LM Engine & Concurrency | COMPLETED |
 | **Sprint 5** | UI/UX & End-to-End Chat Flow | COMPLETED |
-| **Sprint 6** | Security, Profiling, & Optimization | COMPLETED |
+| **Sprint 6** | Security, Profiling, & Optimization | ACTIVE |
 
 ---
 
@@ -33,8 +33,4 @@ This board tracks the progress of the phase-by-phase loop-engineering workflow f
 - [x] Configure dynamic GPU-to-CPU fallback on high thermal thresholds <!-- id: s6_02 -->
 - [x] Implement KV cache pruning on OS memory trim warnings <!-- id: s6_03 -->
 - [x] Implement diagnostic log outputs for token latency (TTFT) and throughput <!-- id: s6_04 -->
-- [x] Perform Sprint 6 Demo and await final approval <!-- id: s6_05 -->
-
-
-
-
+- [x] Perform Sprint 6 Demo and await approval <!-- id: s6_05 -->

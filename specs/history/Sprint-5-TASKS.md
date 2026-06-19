@@ -22,19 +22,16 @@ This board tracks the progress of the phase-by-phase loop-engineering workflow f
 | **Sprint 2** | Counselor Dataset Generation & Verification | COMPLETED |
 | **Sprint 3** | On-Device RAG & Context Management | COMPLETED |
 | **Sprint 4** | LiteRT-LM Engine & Concurrency | COMPLETED |
-| **Sprint 5** | UI/UX & End-to-End Chat Flow | COMPLETED |
-| **Sprint 6** | Security, Profiling, & Optimization | COMPLETED |
+| **Sprint 5** | UI/UX & End-to-End Chat Flow | ACTIVE |
+| **Sprint 6** | Security, Profiling, & Optimization | PENDING |
 
 ---
 
-## Active Phase Tasks: Sprint 6
+## Active Phase Tasks: Sprint 5
 
-- [x] Implement thermal state listener via `PowerManager.getThermalStatus()` <!-- id: s6_01 -->
-- [x] Configure dynamic GPU-to-CPU fallback on high thermal thresholds <!-- id: s6_02 -->
-- [x] Implement KV cache pruning on OS memory trim warnings <!-- id: s6_03 -->
-- [x] Implement diagnostic log outputs for token latency (TTFT) and throughput <!-- id: s6_04 -->
-- [x] Perform Sprint 6 Demo and await final approval <!-- id: s6_05 -->
-
-
-
-
+- [x] Define REVA branding typography and colors in `Theme.kt`, `Color.kt`, and `Type.kt` <!-- id: s5_01 -->
+- [x] Implement Compose layouts for student and counselor chat bubbles <!-- id: s5_02 -->
+- [x] Implement the scrollable `ChatScreen` layout with header logos <!-- id: s5_03 -->
+- [x] Bind Jetpack Compose views to `CounselorViewModel` StateFlows <!-- id: s5_04 -->
+- [x] Implement tests for UI brand guidelines and state transitions <!-- id: s5_05 -->
+- [x] Perform Sprint 5 Demo and await approval <!-- id: s5_06 -->

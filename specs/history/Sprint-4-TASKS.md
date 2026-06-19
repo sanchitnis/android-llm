@@ -21,20 +21,18 @@ This board tracks the progress of the phase-by-phase loop-engineering workflow f
 | **Sprint 1** | Project Scaffold & Asset Delivery | COMPLETED |
 | **Sprint 2** | Counselor Dataset Generation & Verification | COMPLETED |
 | **Sprint 3** | On-Device RAG & Context Management | COMPLETED |
-| **Sprint 4** | LiteRT-LM Engine & Concurrency | COMPLETED |
-| **Sprint 5** | UI/UX & End-to-End Chat Flow | COMPLETED |
-| **Sprint 6** | Security, Profiling, & Optimization | COMPLETED |
+| **Sprint 4** | LiteRT-LM Engine & Concurrency | ACTIVE |
+| **Sprint 5** | UI/UX & End-to-End Chat Flow | PENDING |
+| **Sprint 6** | Security, Profiling, & Optimization | PENDING |
 
 ---
 
-## Active Phase Tasks: Sprint 6
+## Active Phase Tasks: Sprint 4
 
-- [x] Implement thermal state listener via `PowerManager.getThermalStatus()` <!-- id: s6_01 -->
-- [x] Configure dynamic GPU-to-CPU fallback on high thermal thresholds <!-- id: s6_02 -->
-- [x] Implement KV cache pruning on OS memory trim warnings <!-- id: s6_03 -->
-- [x] Implement diagnostic log outputs for token latency (TTFT) and throughput <!-- id: s6_04 -->
-- [x] Perform Sprint 6 Demo and await final approval <!-- id: s6_05 -->
+- [x] Import LiteRT-LM dependencies and native libraries <!-- id: s4_01 -->
+- [x] Implement `LlmEngine.kt` for 4096-token local inference <!-- id: s4_02 -->
+- [x] Implement `LlmThread` and `Mutex` concurrency locks <!-- id: s4_03 -->
+- [x] Wire `LlmEngine` to `CounselorViewModel` via flows <!-- id: s4_04 -->
+- [x] Perform Sprint 4 Demo and await approval <!-- id: s4_05 -->
 
-
-
-
+- [x] Create and review implementation decision log with possible alternatives <!-- id: s4_06 -->

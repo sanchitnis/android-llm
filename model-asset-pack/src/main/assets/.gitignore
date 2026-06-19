@@ -1,0 +1,2 @@
+# Ignore the 2.58 GB model binary from git
+*.litertlm

@@ -40,8 +40,6 @@ Our methodology operates on three distinct loop levels:
 | **Sprint 2** | Counselor Dataset Generation | 10 | 86,500 | 8,500 | 3,200 | 0 | 0 | 0 lines (approved) | 1.0 (Direct approval) |
 | **Sprint 3** | On-Device RAG & Schema Updates | 14 | 88,000 | 11,500 | 4,200 | 0 | 1 | 0 lines (approved) | 1.0 (Direct approval) |
 | **Sprint 4** | LiteRT-LM Engine & Concurrency | 31 | 109,800 | 15,000 | 6,000 | 0 | 1 | 0 lines (approved) | 1.0 (Direct approval) |
-| **Sprint 5** | UI/UX & End-to-End Chat Flow | 17 | 109,800 | 10,000 | 4,500 | 0 | 1 | 0 lines (approved) | 1.0 (Direct approval) |
-| **Sprint 6** | Security, Profiling, & Optimization | 12 | 109,800 | 12,000 | 5,000 | 0 | 1 | 0 lines (approved) | 1.0 (Direct approval) |
 
 ---
 
@@ -66,4 +64,3 @@ Our methodology operates on three distinct loop levels:
    - **Cross-system contradictions** (e.g., PAD `on-demand` vs. zero-network mandate).
    This strongly suggests that loop-engineering workflows should include a **role-shifted expert review phase** as a mandatory gate before exiting the design phase, distinct from the consistency-focused inner critic.
 4. **Defect Severity Distribution**: Of the 14 defects found, 3 were Critical (would cause runtime crashes), 4 were High (significant performance or reliability risk), and 7 were Medium (suboptimal design). The 3 Critical defects alone would have caused production failures, validating the ROI of the expert review gate.
-
