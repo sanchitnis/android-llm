@@ -35,6 +35,11 @@ This board tracks the progress of the phase-by-phase loop-engineering workflow f
 - [x] Implement diagnostic log outputs for token latency (TTFT) and throughput <!-- id: s6_04 -->
 - [x] Perform Sprint 6 Demo and await final approval <!-- id: s6_05 -->
 
+---
 
+## Future Backlog: Google Play Store Release Compliance
 
-
+- [ ] Migrate model selection from raw file paths to Storage Access Framework (SAF) using `Intent.ACTION_OPEN_DOCUMENT` to comply with Google Play's Scoped Storage guidelines. <!-- id: gp_01 -->
+- [ ] Implement system Uri persistence and stream copy to duplicate the selected weights file into `context.filesDir`. <!-- id: gp_02 -->
+- [ ] Add post-copy user prompt with instructions to delete the duplicate download file manually, or request deletion permission via `DocumentsContract.deleteDocument()`. <!-- id: gp_03 -->
+- [ ] Implement SHA-256 model checksum verification upon import to guarantee model integrity before loading it into LiteRT-LM. <!-- id: gp_04 -->

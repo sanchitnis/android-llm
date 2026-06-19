@@ -4,9 +4,9 @@ This document details the Gradle multi-module layout, Google Play Asset Delivery
 
 ---
 
-## 1. Project Module Structure
+### 1. Project Module Structure
 
-The Android project is structured as a multi-module Gradle project to separate the primary application runtime from the heavy model asset package.
+The Android project is structured as a single-module Gradle project. By relying exclusively on direct file sideloading, the app avoids Google Play's APK size limits, eliminates split-module compilation, and avoids the 5.16 GB storage duplication penalty.
 
 ```
 project-root/
@@ -14,30 +14,23 @@ project-root/
 ├── build.gradle (Project level)
 ├── settings.gradle
 │
-├── app/ (Main application module)
-│   ├── build.gradle
-│   └── src/main/
-│       ├── assets/
-│       │   └── databases/
-│       │       └── admission.db (Offline database template)
-│       └── java/com/admission/counselor/ (Java/Kotlin Source)
-│
-└── model_asset/ (Play Asset Delivery module)
+└── app/ (Main application module)
     ├── build.gradle
-    └── src/main/assets/
-        └── gemma-4-E2B-it.litertlm (2.58 GB Model File)
+    └── src/main/
+        ├── assets/
+        │   └── databases/
+        │       └── admission.db (Offline database template)
+        └── java/com/admission/counselor/ (Java/Kotlin Source)
 ```
 
 ---
 
-## 2. Play Asset Delivery (PAD) Configuration
+## 2. Model Sideloading and Gradle Configuration
 
-Google Play Store restricts base APK package sizes to **150 MB**. The `gemma-4-E2B-it` model file is **2.58 GB** on-disk. To deliver this asset, the project uses **install-time** Play Asset Delivery.
-
-Install-time delivery bundles the model asset with the AAB (Android App Bundle) and is downloaded automatically during app installation via Google Play. This eliminates the need for any post-install network access, preserving the app's zero-network-permission security model.
+The `gemma-4-E2B-it` model file is **2.58 GB** on-disk. To deliver this asset without network access (preserving the zero-network privacy mandate) and without duplicate disk usage, the app reads the model binary directly from the device's local file storage.
 
 ### 2.1 settings.gradle Configuration
-Declare the application and asset pack modules in the project settings file:
+The settings file only needs to include the main application module:
 
 ```groovy
 // settings.gradle
@@ -57,29 +50,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AdmissionCounselorAI"
 include ':app'
-include ':model_asset'
-project(':model_asset').projectDir = new File(rootDir, 'model_asset')
 ```
 
-### 2.2 model_asset/build.gradle Configuration
-Apply the asset-pack plugin and set the delivery mode to `install-time`:
-
-```groovy
-// model_asset/build.gradle
-plugins {
-    id 'com.android.asset-pack'
-}
-
-assetPack {
-    packName = "model_asset"
-    dynamicDelivery {
-        deliveryMode = "install-time"
-    }
-}
-```
-
-### 2.3 app/build.gradle Configuration
-Link the main application module with the asset pack and declare Play Core dependencies:
+### 2.2 app/build.gradle Configuration
+Declare standard Android dependencies and Hilt. No Play Asset Delivery plugins or packaging dependencies are needed:
 
 ```groovy
 // app/build.gradle
@@ -109,11 +83,12 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.play:asset-delivery:2.2.2'
-    implementation 'com.google.android.play:asset-delivery-ktx:2.2.2'
-    assetPack ':model_asset'
+    // Standard dependencies
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.7.0'
 
-    // Hilt Dependency Injection (MED-06 fix)
+    // Hilt Dependency Injection
     implementation 'com.google.dagger:hilt-android:2.51.1'
     kapt 'com.google.dagger:hilt-android-compiler:2.51.1'
     implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
@@ -122,47 +97,67 @@ dependencies {
 
 ---
 
-## 3. Model Download and Installation Pipeline
+## 3. Model Sideload Resolution and Loading Pipeline
 
-Since the model uses `install-time` delivery, the asset pack is available immediately after installation from Google Play. The app resolves the local file path at runtime.
+At runtime, the app automatically checks several directories on the local device storage to locate the model binary. This check requires **no runtime storage permissions** if the model is sideloaded to app-specific directories.
 
 ```mermaid
 graph TD
-    Start[User Submits Query] --> CheckLocal{Is Model Available in Install-Time Asset Pack?}
-    CheckLocal -->|Yes| ResolvePath[Resolve Asset Path via AssetPackManager]
-    ResolvePath --> LoadModel[Initialize LiteRT-LM with Resolved Path]
-    CheckLocal -->|No - Corrupt or Missing| ShowError[Display Error: Reinstall Required]
+    Start[User Submits Query] --> CheckPrivate{Found in private files dir?}
+    CheckPrivate -->|Yes| Load[Load Model directly]
+    CheckPrivate -->|No| CheckExternal{Found in external files dir?}
+    CheckExternal -->|Yes| Load
+    CheckExternal -->|No| CheckDownload{Found in public Download folder?}
+    CheckDownload -->|Yes| Load
+    CheckDownload -->|No| Fail[Display Error: Please sideload model]
 ```
 
-### 3.1 Install-Time Asset Resolution
-
-Since the model uses `install-time` delivery, the asset pack is guaranteed to be available immediately after app installation. The application resolves the asset path at runtime using the Play Core Asset Delivery API:
+### 3.1 Model Loader Implementation
+The loader resolves the file path by scanning designated locations sequentially:
 
 ```kotlin
-class ModelAssetLoader(private val context: Context) {
-    private val assetPackManager = AssetPackManagerFactory.getInstance(context)
-
+@Singleton
+class ModelAssetLoader @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
     fun resolveModelPath(): Result<String> {
-        val packName = "model_asset"
-        val location = assetPackManager.getPackLocation(packName)
-        return if (location != null) {
-            Result.success(location.assetsPath() + "/gemma-4-E2B-it.litertlm")
-        } else {
-            // Install-time packs should always be available.
-            // If missing, the APK/AAB is corrupt or was sideloaded.
-            Result.failure(
-                IllegalStateException(
-                    "Model asset pack not found. Please reinstall the app from Google Play."
-                )
-            )
+        // Location 1: App private storage (filesDir)
+        val privateFile = java.io.File(context.filesDir, "gemma-4-E2B-it.litertlm")
+        if (privateFile.exists() && privateFile.length() > 2_000_000_000L) {
+            return Result.success(privateFile.absolutePath)
         }
+
+        // Location 2: Scoped external app storage (no runtime permissions needed)
+        // Path: /sdcard/Android/data/com.admission.counselor/files/gemma-4-E2B-it.litertlm
+        val extFilesDir = context.getExternalFilesDir(null)
+        if (extFilesDir != null) {
+            val extFile = java.io.File(extFilesDir, "gemma-4-E2B-it.litertlm")
+            if (extFile.exists() && extFile.length() > 2_000_000_000L) {
+                return Result.success(extFile.absolutePath)
+            }
+        }
+
+        // Location 3: Public Download folder
+        // Path: /sdcard/Download/gemma-4-E2B-it.litertlm
+        val downloadFolder = android.os.Environment.getExternalStoragePublicDirectory(
+            android.os.Environment.DIRECTORY_DOWNLOADS
+        )
+        val downloadFile = java.io.File(downloadFolder, "gemma-4-E2B-it.litertlm")
+        if (downloadFile.exists() && downloadFile.length() > 2_000_000_000L) {
+            return Result.success(downloadFile.absolutePath)
+        }
+
+        return Result.failure(
+            IllegalStateException(
+                "Model file 'gemma-4-E2B-it.litertlm' not found. Please sideload the model to 'Download' or the app's files directory."
+            )
+        )
     }
 }
 ```
 
-> **Note**: Unlike on-demand delivery, install-time packs do not require `INTERNET` permission, download progress tracking, or network error handling. The model is available from the moment the app launches.
-
----
+### 3.2 Pre-compiled XNNPACK Cache Sideloading
+To avoid initial compilation pauses (which take 10+ seconds for a 2.58 GB model on first-run), developers can sideload the precompiled cache file (`.xnnpack_cache` companion) directly next to the model weights file. At runtime, the LiteRT-LM engine detects the companion cache file and loads compiled kernels instantly.
 
 ## 4. SQLite Database Provisioning (First Run Seeding)
 

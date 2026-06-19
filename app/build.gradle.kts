@@ -46,7 +46,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    assetPacks += mutableSetOf(":model-asset-pack")
 }
 
 dependencies {
@@ -64,16 +63,16 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.50")
     ksp("com.google.dagger:hilt-compiler:2.50")
     
-    // Play Feature Delivery for Asset Packs
-    implementation("com.google.android.play:asset-delivery-ktx:2.2.1")
-    
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
 
     // LiteRT / MediaPipe GenAI (For local Gemma execution)
-    implementation("com.google.mediapipe:tasks-genai:0.10.14")
+    implementation("com.google.mediapipe:tasks-genai:0.10.27")
+
+    // Hilt Compose Navigation
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")

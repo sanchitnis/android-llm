@@ -9,14 +9,8 @@ import androidx.compose.ui.unit.sp
 import com.admission.counselor.R
 
 // Fonts
-val PlusJakartaSans = FontFamily(
-    Font(R.font.plus_jakarta_sans_medium, FontWeight.Medium),
-    Font(R.font.plus_jakarta_sans_bold, FontWeight.Bold)
-)
-
-val GlacialIndifference = FontFamily(
-    Font(R.font.glacial_indifference_regular, FontWeight.Normal)
-)
+val PlusJakartaSans = FontFamily.SansSerif
+val GlacialIndifference = FontFamily.SansSerif
 
 // Typography Styles
 val Typography = Typography(

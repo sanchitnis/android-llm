@@ -2,7 +2,7 @@ package com.admission.counselor.data.db
 
 import androidx.room.Database
 import androidx.room.Entity
-import androidx.room.Fts5
+import androidx.room.Fts4
 import androidx.room.PrimaryKey
 import androidx.room.RoomDatabase
 
@@ -19,7 +19,7 @@ data class CourseEntity(
 )
 
 @Entity(tableName = "courses_fts")
-@Fts5(content = "courses")
+@Fts4(contentEntity = CourseEntity::class)
 data class CourseFtsEntity(
     val name: String,
     val duration: String,

@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "AdmissionCounselorAI"
 include(":app")
-include(":model-asset-pack")

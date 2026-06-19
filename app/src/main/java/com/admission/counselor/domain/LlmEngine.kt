@@ -32,7 +32,6 @@ class LlmEngine @Inject constructor(
     private var modelPath: String? = null
     
     private var thermalPolicy = ThermalPolicy.FULL_SPEED
-    private var currentBackend: LlmInference.Backend? = null
 
     /**
      * Set the path to the model file resolved from Play Asset Delivery.
@@ -59,7 +58,7 @@ class LlmEngine @Inject constructor(
         }
         val startTime = System.currentTimeMillis()
         var firstTokenReceived = false
-        var tokenCount = 0
+        var lastText = ""
         try {
             val engine = getOrInitializeEngine()
             val channel = Channel<String>(Channel.UNLIMITED)
@@ -69,12 +68,12 @@ class LlmEngine @Inject constructor(
             engine.generateResponseAsync(prompt)
 
             for (token in channel) {
+                lastText = token
                 if (!firstTokenReceived) {
                     val ttft = System.currentTimeMillis() - startTime
                     android.util.Log.d("LlmEngineDiagnostics", "Time to First Token (TTFT): ${ttft}ms")
                     firstTokenReceived = true
                 }
-                tokenCount++
                 emit(token)
                 
                 // If thermal state is throttled, introduce a 40ms pause between tokens
@@ -84,8 +83,9 @@ class LlmEngine @Inject constructor(
             }
             
             val totalTime = System.currentTimeMillis() - startTime
-            val throughput = if (totalTime > 0) (tokenCount.toFloat() / (totalTime.toFloat() / 1000f)) else 0f
-            android.util.Log.d("LlmEngineDiagnostics", "Generation completed: $tokenCount tokens generated in ${totalTime}ms (Throughput: ${String.format("%.2f", throughput)} tokens/sec)")
+            val estimatedTokenCount = (lastText.length / 4).coerceAtLeast(1)
+            val throughput = if (totalTime > 0) (estimatedTokenCount.toFloat() / (totalTime.toFloat() / 1000f)) else 0f
+            android.util.Log.d("LlmEngineDiagnostics", "Generation completed: $estimatedTokenCount tokens estimated in ${totalTime}ms (Throughput: ${String.format("%.2f", throughput)} tokens/sec)")
         } finally {
             activeChannel = null
             sessionMutex.unlock()
@@ -97,10 +97,19 @@ class LlmEngine @Inject constructor(
      * closing the native instance (since MediaPipe lacks a native cancel API).
      */
     suspend fun cancelGeneration() = withContext(LlmThread.dispatcher) {
-        activeChannel?.close(CancellationException("User cancelled generation"))
-        activeChannel = null
-        inferenceEngine?.close()
-        inferenceEngine = null
+        val channel = activeChannel
+        if (channel != null) {
+            channel.close(CancellationException("User cancelled generation"))
+            activeChannel = null
+            inferenceEngine?.close()
+            inferenceEngine = null
+            // Proactively re-initialize engine in background to mitigate cold start latency
+            try {
+                getOrInitializeEngine()
+            } catch (e: Exception) {
+                android.util.Log.e("LlmEngineDiagnostics", "Failed to proactively re-initialize engine: ${e.message}")
+            }
+        }
     }
 
     /**
@@ -116,44 +125,23 @@ class LlmEngine @Inject constructor(
     private fun getOrInitializeEngine(): LlmInference {
         val path = modelPath ?: throw IllegalStateException("Model path has not been set.")
         
-        // Select preferred backend based on thermal status
-        val preferredBackend = if (thermalPolicy == ThermalPolicy.DEGRADED) {
-            LlmInference.Backend.CPU
-        } else {
-            LlmInference.Backend.GPU
-        }
-
-        // Re-initialize engine if hardware acceleration delegate preference has changed
-        if (inferenceEngine != null && currentBackend != preferredBackend) {
-            inferenceEngine?.close()
-            inferenceEngine = null
-        }
-
         if (inferenceEngine == null) {
             val options = LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(path)
-                .setTemperature(0.2f)
-                .setTopK(40)
-                .setMaxTokens(1546)
-                .setPreferredBackend(preferredBackend)
+                .setMaxTokens(4096)
                 .setResultListener { partialResult, done ->
-                    val channel = activeChannel
-                    if (channel != null) {
+                    val currentChannel = activeChannel
+                    if (currentChannel != null) {
+                        currentChannel.trySend(partialResult)
                         if (done) {
-                            channel.close()
-                        } else if (partialResult != null) {
-                            channel.trySend(partialResult)
+                            currentChannel.close()
                         }
                     }
-                }
-                .setErrorListener { error ->
-                    activeChannel?.close(error)
                 }
                 .build()
             
             inferenceEngine = LlmInference.createFromOptions(context, options)
-            currentBackend = preferredBackend
-            android.util.Log.d("LlmEngineDiagnostics", "LiteRT-LM engine initialized with backend: $preferredBackend")
+            android.util.Log.d("LlmEngineDiagnostics", "LiteRT-LM engine initialized")
         }
         return inferenceEngine!!
     }

@@ -10,14 +10,26 @@ import java.util.concurrent.Executors
  * and runs sequentially on a single thread.
  */
 object LlmThread {
-    private val executor = Executors.newSingleThreadExecutor { runnable ->
+    private var executor = createExecutor()
+    
+    val dispatcher: CoroutineDispatcher
+        get() {
+            synchronized(this) {
+                if (executor.isShutdown) {
+                    executor = createExecutor()
+                }
+                return executor.asCoroutineDispatcher()
+            }
+        }
+
+    private fun createExecutor() = Executors.newSingleThreadExecutor { runnable ->
         Thread(runnable, "LlmThread").apply { isDaemon = true }
     }
-    
-    val dispatcher: CoroutineDispatcher = executor.asCoroutineDispatcher()
 
     fun destroy() {
-        executor.shutdown()
+        synchronized(this) {
+            executor.shutdown()
+        }
     }
 }
 

@@ -96,7 +96,9 @@ class CounselorViewModel @Inject constructor(
         viewModelScope.launch {
             modelAssetLoader.resolveModelPath()
                 .onSuccess { path ->
-                    llmEngine.setModelPath(path)
+                    viewModelScope.launch {
+                        llmEngine.loadModel(path)
+                    }
                     _uiState.value = CounselorUiState.Ready
                 }
                 .onFailure { error ->
@@ -153,7 +155,7 @@ class CounselorViewModel @Inject constructor(
                 }
                 .collect { token ->
                     _uiState.value = CounselorUiState.Generating(token)
-                    _streamingText.update { it + token }
+                    _streamingText.value = token
                 }
 
             // Commit completed response
@@ -264,7 +266,5 @@ class CounselorViewModel @Inject constructor(
                 powerManager.removeThermalStatusListener(it)
             }
         }
-        
-        LlmThread.destroy() // Shut down LlmThread executor dispatcher
     }
 }

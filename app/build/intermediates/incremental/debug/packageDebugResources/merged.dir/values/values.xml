@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Admission Counselor</string>
+    <style name="Theme.AdmissionCounselor" parent="android:Theme.Material.Light.NoActionBar">
+        
+    </style>
+</resources>

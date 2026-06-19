@@ -12,13 +12,12 @@ The app runs a 2.58 GB `gemma-4-E2B-it` model locally on the user's device. Pack
 
 | Option | Description | Pros | Cons |
 | :--- | :--- | :--- | :--- |
-| **Selected: Install-Time Play Asset Delivery (PAD)** | Model is packaged as an asset pack in the App Bundle with `deliveryMode = "install-time"`. Google Play handles delivery during initial app download. | - Fully eliminates post-install download screens and progress bars.<br>- Adheres strictly to the zero-network-permission guarantee.<br>- Google Play handles download resume, compression, and differential delta updates. | - The initial app download size displayed on the Play Store is very large (2.58 GB).<br>- Requires the device to have sufficient storage space before installing. |
-| **Alternative A: On-Demand Play Asset Delivery (PAD)** | Model is packaged as an asset pack but downloaded dynamically via Play Core APIs after the user launches the app. | - Initial app download size shown in Google Play is small (~50 to 100 MB).<br>- User can launch the app shell without waiting for the full 2.58 GB download. | - Requires `android.permission.INTERNET` internally for Play Core to connect to Google servers, violating the strict zero-network promise.<br>- Download can fail due to poor connectivity, leaving the app unusable. |
-| **Alternative B: Dynamic HTTPS CDN Download** | The app shell downloads the model from a custom Content Delivery Network (CDN) using a custom HTTP downloader on first launch. | - Gives the engineering team complete control over the CDN, downloads, and caching strategies. | - Requires writing custom download, pause, resume, and file integrity validation logic.<br>- Requires declaring network permissions and violates security sandbox rules.<br>- Higher infrastructure cost for self-hosted bandwidth. |
-| **Alternative C: Standard Asset Folder Bundling** | The model is placed directly inside the main `/assets` folder of the APK. | - Easiest to configure. | - Android Gradle Plugin fails to package files larger than 2.2 GB inside the standard APK asset directory.<br>- Google Play restricts standard APK sizes to 150 MB. |
+| **Selected: File Sideloading (External / Private Storage)** | The model weights file is side-loaded directly onto the device (either in the app's external files directory or the standard `Download/` folder) without packaging it inside the app bundle. | - Fully eliminates double storage overhead (takes exactly 2.58 GB, not 5.16 GB).<br>- Adheres strictly to the zero-network-permission guarantee (offline-only execution).<br>- Avoids complex Play Asset Delivery build setup, split modules, and Play Store API dependencies. | - User or installer must manually place the 2.58 GB model file in the designated folder on the device. |
+| **Alternative A: Install-Time Play Asset Delivery (PAD)** | Model is packaged as split asset packs in the App Bundle with `deliveryMode = "install-time"`. Google Play handles delivery during app download. | - Fully eliminates post-install downloads.<br>- Automatic download resume. | - Exceeds individual asset pack size limits (1.5 GB), requiring build-time file splitting and on-device concatenation.<br>- Consumes double the disk storage (5.16 GB) on the device. |
+| **Alternative B: Dynamic HTTPS CDN Download** | The app shell downloads the model from a custom Content Delivery Network (CDN) using a custom HTTP downloader on first launch. | - Keeps app download size small.<br>- No storage duplication. | - Violates the strict zero-network promise (requires declaring network permissions).<br>- Fragile custom download/resume logic. |
 
 ### Selected Option Rationale
-**Install-Time Play Asset Delivery (PAD)** was selected to enforce the security mandate. The app operates with zero network permissions. This guarantees that no student conversation data or query profiles can leave the device. Ship-time bundling via Play Store is the only reliable way to deliver a 2.58 GB asset without requiring post-install internet access.
+**File Sideloading** was selected as the only delivery method. It enforces the zero-network-permission guarantee while completely avoiding the massive 5.16 GB storage duplication penalty and the code complexity associated with Play Asset Delivery (PAD). By placing the 2.58 GB model binary in the app's scoped external files directory (which does not require runtime permissions) or standard `Download/` folder, the app reads the model directly with zero duplication and zero network access.
 
 ---
 
@@ -94,3 +93,20 @@ The application must protect student data and university resources while running
 
 ### Selected Option Rationale
 **File-Based Encryption + Sandbox Isolation** was chosen because the admission database contains only publicly available university information (fees, eligibility, and program descriptions). Adding SQLCipher adds package size and query latency without mitigating a real security threat. The student's private chat history is stored strictly in-memory and wiped on unload, protecting personal privacy.
+
+---
+
+## 7. Model Asset Packaging and Google Play Size Limits
+
+Google Play limits individual asset packs to **1.5 GB** and the total of all install-time asset packs combined to **1.0 GB** (extendable to **4.0 GB** via Google Play Large Asset Packs approval). Our target `gemma-4-E2B-it` model file is **2.58 GB**, meaning a single asset pack file will fail Google Play Store validation.
+
+| Option | Description | Pros | Cons |
+| :--- | :--- | :--- | :--- |
+| **Selected: File Sideloading (External / Private Storage)** | Place the single 2.58 GB `gemma-4-E2B-it.litertlm` file directly into private or scoped external storage folders. | - Keeps zero-network-permission guarantee.<br>- Eliminates 1.5 GB asset pack splitting/merge logic.<br>- Zero storage duplication overhead (only consumes 2.58 GB on the device). | - Sideloading is manual and requires side-distribution channels for the model weights file. |
+| **Alternative A: Split Install-Time Asset Packs** | Split the model into two packs (:model-asset-pack-part1, :model-asset-pack-part2) under the 1.5 GB limit and merge them on first launch. | - Automatic download from Play Store. | - Double storage penalty (5.16 GB consumed on-device).<br>- Merge overhead on first run. |
+| **Alternative B: Switch to a Smaller Model Target (<1.5 GB)** | Use a smaller model that fits in a single standard asset pack without splitting or sideloading. | - Simple delivery and compact storage. | - Reduced reasoning capability for complex admissions queries. |
+
+### Selected Option Rationale
+**File Sideloading** is selected as the exclusive delivery method. It avoids Google Play's 1.5 GB individual asset pack limits entirely, bypasses the 5.16 GB storage duplication penalty, and simplifies the codebase by removing all Play Core asset delivery libraries and dynamic split modules.
+
+
