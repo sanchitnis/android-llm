@@ -1,0 +1,4 @@
+- [x] Run cross-reference path audits and link validation in README.md & TRACEABILITY.md <!-- id: win_p16_01 -->
+- [x] Log Phase 12-15 metrics in LOOP-LOG.md <!-- id: win_p16_02 -->
+- [x] Mark win_p16 task as completed in tasks/TASKS.md <!-- id: win_p16_03 -->
+- [x] Run Critique & Verification passes <!-- id: win_p16_04 -->
