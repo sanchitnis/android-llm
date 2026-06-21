@@ -1,0 +1,6 @@
+- [x] Specify NTFS User SID-Based Filesystem Sandboxing in WINDOWS-ARCHITECTURE.md <!-- id: win_p14_01 -->
+- [x] Detail Windows DPAPI API Key Encryption JNI wrapper in WINDOWS-ARCHITECTURE.md <!-- id: win_p14_02 -->
+- [x] Define Volatile Transcript Memory Policy & JVM String clearing in WINDOWS-ARCHITECTURE.md <!-- id: win_p14_03 -->
+- [x] Define firewall / outbound network restriction parameters in WINDOWS-ARCHITECTURE.md <!-- id: win_p14_04 -->
+- [x] Update tasks/TASKS.md active tasks board for Phase 14 <!-- id: win_p14_05 -->
+- [x] Run Critique & Verification passes on the specs updates <!-- id: win_p14_06 -->

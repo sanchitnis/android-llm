@@ -32,6 +32,7 @@ class LlmEngine @Inject constructor(
     private var modelPath: String? = null
     
     private var thermalPolicy = ThermalPolicy.FULL_SPEED
+    private var currentBackend: LlmInference.Backend? = null
 
     /**
      * Set the path to the model file resolved from Play Asset Delivery.
@@ -65,7 +66,15 @@ class LlmEngine @Inject constructor(
             activeChannel = channel
 
             // Start streaming inference
-            engine.generateResponseAsync(prompt)
+            engine.generateResponseAsync(prompt) { partialResult: String, done: Boolean ->
+                val currentChannel = activeChannel
+                if (currentChannel != null) {
+                    currentChannel.trySend(partialResult)
+                    if (done) {
+                        currentChannel.close()
+                    }
+                }
+            }
 
             for (token in channel) {
                 lastText = token
@@ -125,23 +134,29 @@ class LlmEngine @Inject constructor(
     private fun getOrInitializeEngine(): LlmInference {
         val path = modelPath ?: throw IllegalStateException("Model path has not been set.")
         
+        // Select preferred backend based on thermal status
+        val preferredBackend = if (thermalPolicy == ThermalPolicy.DEGRADED) {
+            LlmInference.Backend.CPU
+        } else {
+            LlmInference.Backend.GPU
+        }
+
+        // Re-initialize engine if hardware acceleration delegate preference has changed
+        if (inferenceEngine != null && currentBackend != preferredBackend) {
+            inferenceEngine?.close()
+            inferenceEngine = null
+        }
+
         if (inferenceEngine == null) {
             val options = LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(path)
                 .setMaxTokens(4096)
-                .setResultListener { partialResult, done ->
-                    val currentChannel = activeChannel
-                    if (currentChannel != null) {
-                        currentChannel.trySend(partialResult)
-                        if (done) {
-                            currentChannel.close()
-                        }
-                    }
-                }
+                .setPreferredBackend(preferredBackend)
                 .build()
             
             inferenceEngine = LlmInference.createFromOptions(context, options)
-            android.util.Log.d("LlmEngineDiagnostics", "LiteRT-LM engine initialized")
+            currentBackend = preferredBackend
+            android.util.Log.d("LlmEngineDiagnostics", "LiteRT-LM engine initialized with backend: $preferredBackend")
         }
         return inferenceEngine!!
     }

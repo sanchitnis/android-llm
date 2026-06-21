@@ -25,9 +25,13 @@ The goal of this specification is to define the architecture, data schemas, thre
 | [SECURITY-AND-PRIVACY.md](file:///d:/Github/android-llm/specs/SECURITY-AND-PRIVACY.md) | Data privacy, storage sandboxing, and compliance framework. |
 | [BUILD-GUIDE.md](file:///d:/Github/android-llm/specs/BUILD-GUIDE.md) | Asset packaging guide for the 2.58 GB model file. |
 | [TEST-PLAN.md](file:///d:/Github/android-llm/specs/TEST-PLAN.md) | Validation, profiling, and benchmarking suite. |
+| [IMPLEMENTATION-PLAN.md](file:///d:/Github/android-llm/specs/IMPLEMENTATION-PLAN.md) | Master sprint roadmap and implementation tracker. |
+| [PWA-ARCHITECTURE.md](file:///d:/Github/android-llm/specs/PWA-ARCHITECTURE.md) | Progressive Web App specification (WebGPU, SQLite Wasm, OPFS, Web Workers). |
+| [WINDOWS-ARCHITECTURE.md](file:///d:/Github/android-llm/specs/WINDOWS-ARCHITECTURE.md) | Windows Desktop App architecture (Compose Multiplatform, LiteRT CPU/GPU, shared asset weights, and sandboxing). |
 | [ISSUES.md](file:///d:/Github/android-llm/specs/ISSUES.md) | List of open issues, trade-offs, and design gaps. |
 | [TRACEABILITY.md](file:///d:/Github/android-llm/specs/TRACEABILITY.md) | Requirement-to-test and requirement-to-file traceability matrix. |
 | [LOOP-RULES.md](file:///d:/Github/android-llm/specs/LOOP-RULES.md) | Loop-engineering workflow rules. |
 | [LOOP-LOG.md](file:///d:/Github/android-llm/specs/LOOP-LOG.md) | Loop-engineering metrics log (tokens, elapsed time, iterations). |
 | [tasks/TASKS.md](file:///d:/Github/android-llm/specs/tasks/TASKS.md) | Atomic phase tasks board. |
 | [history/](file:///d:/Github/android-llm/specs/history/) | Evolutionary logs and archived plans, walkthroughs, tasks, and specs from previous phases. |
+

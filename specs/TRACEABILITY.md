@@ -20,6 +20,10 @@ The following table indexes all active specification documents within the `/spec
 | **Security & Privacy** | [SECURITY-AND-PRIVACY.md](file:///d:/Github/android-llm/specs/SECURITY-AND-PRIVACY.md) | Sandboxed local storage paths, Android File-Based Encryption (FBE), and volatile transcript memory policies. | VERIFIED |
 | **Build Guide** | [BUILD-GUIDE.md](file:///d:/Github/android-llm/specs/BUILD-GUIDE.md) | Gradle module linking, Google Play Asset Delivery configuration, and SQLite asset copy logic. | VERIFIED |
 | **Test Plan** | [TEST-PLAN.md](file:///d:/Github/android-llm/specs/TEST-PLAN.md) | Automated unit tests, integration test suites, low-memory profiling simulations, and performance benchmarks. | VERIFIED |
+| **Implementation Plan** | [IMPLEMENTATION-PLAN.md](file:///d:/Github/android-llm/specs/IMPLEMENTATION-PLAN.md) | Master sprint roadmap and implementation tracker. | VERIFIED |
+| **PWA Architecture** | [PWA-ARCHITECTURE.md](file:///d:/Github/android-llm/specs/PWA-ARCHITECTURE.md) | Progressive Web App specification (WebGPU, SQLite Wasm, OPFS, Web Workers). | VERIFIED |
+| **Windows Architecture** | [WINDOWS-ARCHITECTURE.md](file:///d:/Github/android-llm/specs/WINDOWS-ARCHITECTURE.md) | Windows Desktop App architecture (Compose Multiplatform, LiteRT CPU/GPU, shared asset weights, and sandboxing). | VERIFIED |
+
 
 ---
 

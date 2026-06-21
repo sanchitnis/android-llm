@@ -3,122 +3,712 @@ import json
 
 def expand_dataset():
     programs = [
+        # --- General University Entries ---
         {
-            "name": "B.Tech Computer Science and Engineering", "duration": "4 Years", "fee": "Contact Admissions", "deadline": "August 2026",
+            "name": "REVA University General Information & Overview",
+            "duration": "Established 2012",
+            "fee": "Contact admissions@reva.edu.in / +919021190211 / +919611201303 / 080 4696 6966",
+            "deadline": "Brochure 2026-27",
+            "eligibility": "Address: Rukmini Knowledge Park, Kattigenahalli, Yelahanka, Bengaluru - 560064, Karnataka, India. Admission Codes: KCET Code: E232, COMEDK Code: E164.",
+            "highlights": "NAAC A+ Grade Accredited. NBA Accreditation for CSE, ECE, and Mechanical Engineering. NIRF Rank Band: University (151-200), Engineering (201-300). QS World University Rankings Asia 2026: Asia (1001-1100), Southern Asia Rank 292. Times Higher Education 2026: 1501+ Global Band. THE Impact Rankings 2025: SDG 3 (1001-1500), SDG 4 (1001-1500), SDG 16 (1001+), SDG 17 (1001-1500). QS I-GAUGE Diamond Rating.",
+            "why_join": "Founder & Chancellor: Dr. P. Shyama Raju. Pro Chancellor: Umesh S. Raju. Philosophy: 'Educate to Enterprise' — turning learning into action, initiative, and impact. Vision: To become a technologically advanced, sustainable global university dedicated to the well-being of all. THE WEEK Best University 2025: Emerging Multi-Disciplinary Rank 5, Private & Deemed Multi-Disciplinary (South Zone) Rank 12. Member of AACSB Business Education Alliance."
+        },
+        {
+            "name": "REVA University Key Metrics & The REVA Story",
+            "duration": "Established 2012",
+            "fee": "100+ Advanced Programmes",
+            "deadline": "Campus Size: 45+ Acre Green Campus",
+            "eligibility": "16,000+ Total Students, 40,000+ Alumni Network, 1000+ Faculty & Staff, 700+ Ph.D. Scholars.",
+            "highlights": "Patents Filed: 1000+, Books Published: 125+, Countries Represented: 27+, Research Facilities: 20+, Start-ups Incubated: 90+.",
+            "why_join": "Technologically advanced, sustainable global university dedicated to the well-being of all."
+        },
+        {
+            "name": "REVA University Campus Facilities & Infrastructure",
+            "duration": "N/A",
+            "fee": "N/A",
+            "deadline": "N/A",
+            "eligibility": "NCC, NSS, Voluntary Work, and Campus Fests. Safe, Modern Hostels.",
+            "highlights": "REVA Research Centre for Innovation & Excellence, REVA NEST (In-house Start-up Incubation Hub), AR/VR Labs, Idea Labs, Fab Labs, Smart Classrooms, Labs & Studios, Library and Information Center.",
+            "why_join": "Student Life & Well-being: 8 Student Clubs, 6 Food Courts, AI Verse, Game Box, Hostels with Wellbeing Support, REVA Health Centre, National-Level Sports Facilities, Guest House, Transportation."
+        },
+        {
+            "name": "REVA University Placement & Career Statistics",
+            "duration": "AY 2025-26",
+            "fee": "INR 56 LPA (Highest CTC Package)",
+            "deadline": "August 2026",
+            "eligibility": "Recruitment Partners: 450+. Total Job Offers: 3533+. Total Internships: 1665. Highest Monthly Stipend: INR 1.16 Lakh / Month.",
+            "highlights": "Top Recruiting Partners: Accenture, Capgemini, Cognizant, Dell, Deloitte, EY, IBM, Juspay, KPMG, LTIMindtree, Microsoft, Oracle, PwC, Schneider Electric, Tata, TCS, Tesco.",
+            "why_join": "Outstanding placement track record with major multinational corporations and industry leaders."
+        },
+        {
+            "name": "REVA University Special Engineering Curriculums (Minors, Honours, IIT Collaborations)",
+            "duration": "4 Years",
+            "fee": "Contact Admissions",
+            "deadline": "August 2026",
+            "eligibility": "B.Tech Students eligibility criteria.",
+            "highlights": "Minor Programmes: Artificial Intelligence & Robotics, Machine Learning, Cyber Security, 3D Printing, Smart Cities, Electric Vehicles, Aerospace Engineering. Honours Programmes: Electric Vehicles, Infrastructure Engineering, Microgrid Technologies, Virtual and Augmented Reality, VLSI Design and Technology, Coding & Next-Gen Technologies, Blockchain.",
+            "why_join": "Collaborative Minors with IITs: Data Science & Machine Learning (IIT Guwahati), Artificial Intelligence (IIT Ropar), Business Analytics (IIT Mandi)."
+        },
+        
+        # --- School of Computer Science and Engineering ---
+        {
+            "name": "B.Tech. Computer Science and Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
             "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects along with Chemistry/Biotechnology/Biology/Technical Vocational subject. Minimum 45% marks (40% for SC/ST).",
-            "highlights": "Focus on AI, Cloud Computing, Cybersecurity, and Software Engineering. High placement record with top tech firms.",
-            "why_join": "Industry-aligned curriculum, state-of-the-art labs, and strong placement assistance in global IT companies."
+            "highlights": "Offered by School of Computer Science and Engineering. Focus on core computation, algorithms, and software design.",
+            "why_join": "NAAC A+ Grade, NBA Accredited. Placement partners include Microsoft, IBM, Deloitte, Accenture."
         },
         {
-            "name": "B.Tech Artificial Intelligence and Data Science", "duration": "4 Years", "fee": "Contact Admissions", "deadline": "August 2026",
+            "name": "B.Tech. Computer Science and Information Technology",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks (40% for SC/ST).",
+            "highlights": "Focus on IT infrastructure, networks, security, and computing tools.",
+            "why_join": "School of Computer Science and Engineering. Dynamic hands-on laboratory work."
+        },
+        {
+            "name": "B.Tech. Information Science and Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
             "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks.",
-            "highlights": "Specialized labs for Machine Learning, Deep Learning, and Big Data Analytics.",
-            "why_join": "Prepares students for the highest-growing sector in tech with hands-on projects and internships."
+            "highlights": "Data management, information systems, and business intelligence.",
+            "why_join": "School of Computer Science and Engineering. Excellent library resources and faculty."
         },
         {
-            "name": "B.Tech Electronics and Communication Engineering", "duration": "4 Years", "fee": "Contact Admissions", "deadline": "August 2026",
+            "name": "B.Tech. Computer Science and Engineering (Artificial Intelligence and Machine Learning)",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
             "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks.",
-            "highlights": "VLSI Design, Embedded Systems, IoT, and 5G Communications.",
-            "why_join": "Blend of hardware and software skills, opening opportunities in core electronics and IT sectors."
+            "highlights": "Focus on neural networks, computer vision, natural language processing, and robotics.",
+            "why_join": "Prepares for high-demand careers in AI. State-of-the-art AI labs."
         },
         {
-            "name": "B.Tech Mechanical Engineering", "duration": "4 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 with Physics, Mathematics, and Chemistry. Minimum 45% marks.",
-            "highlights": "Robotics, Automation, CAD/CAM, and 3D Printing facilities.",
-            "why_join": "Core engineering foundation with modern technological integration for robust career paths."
+            "name": "B.Tech. Computer Science and Engineering (Artificial Intelligence and Data Science)",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks.",
+            "highlights": "Combines predictive analytics, statistics, data modeling, and machine learning.",
+            "why_join": "High-demand specialisation. Direct integration with REVA NEST start-up incubation."
         },
         {
-            "name": "B.Tech Civil Engineering", "duration": "4 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 with Physics, Mathematics, and Chemistry. Minimum 45% marks.",
-            "highlights": "Smart City Planning, Structural Engineering, and Environmental Science.",
-            "why_join": "Contribute to infrastructure development with practical surveying and material testing experience."
+            "name": "B.Tech. Computer Science and Engineering (Internet of Things and Cyber Security including Blockchain Technology)",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks.",
+            "highlights": "Focus on IoT networks, cybersecurity standards, ethical hacking, and blockchain platforms.",
+            "why_join": "Combines next-generation secure computing technologies. Highly industry-relevant."
         },
         {
-            "name": "B.Arch (Bachelor of Architecture)", "duration": "5 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 with PCM or 10+3 Diploma with Mathematics. Minimum 50% marks. Valid NATA score required.",
-            "highlights": "Design studios, model-making workshops, and sustainable architecture focus.",
-            "why_join": "Develop creative and technical skills to design the built environment of the future."
-        },
-        {
-            "name": "BBA (Bachelor of Business Administration)", "duration": "3 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
-            "highlights": "Specializations in Marketing, Finance, HR, and Entrepreneurship.",
-            "why_join": "Develop leadership and management skills for corporate and entrepreneurial success."
-        },
-        {
-            "name": "B.Com (Professional)", "duration": "3 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
-            "highlights": "Integrated with professional certifications like CA/CS/CMA foundation.",
-            "why_join": "Strong foundation in accounting, taxation, and financial management."
-        },
-        {
-            "name": "BCA (Bachelor of Computer Applications)", "duration": "3 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 or equivalent.",
-            "highlights": "Programming, Web Development, Database Management, and Networking.",
-            "why_join": "Fast-track entry into the IT industry with practical coding skills."
-        },
-        {
-            "name": "BA LL.B (Hons.)", "duration": "5 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 or equivalent with minimum 45% marks. Valid CLAT/LSAT score preferred.",
-            "highlights": "Moot court competitions, legal aid clinics, and internships with top law firms.",
-            "why_join": "Comprehensive legal education combining arts foundation with rigorous legal training."
-        },
-        {
-            "name": "BBA LL.B (Hons.)", "duration": "5 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 or equivalent with minimum 45% marks.",
-            "highlights": "Corporate law focus, moot courts, and management integration.",
-            "why_join": "Ideal for students aiming for careers in corporate law, management, and legal consultancy."
-        },
-        {
-            "name": "B.Sc. Biotechnology, Biochemistry, Genetics", "duration": "3 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 with Physics, Chemistry, and Biology/Mathematics.",
-            "highlights": "Advanced life science labs, research projects, and industry tie-ups.",
-            "why_join": "Prepares for careers in research, pharmaceuticals, and healthcare sectors."
-        },
-        {
-            "name": "B.Sc. Bioinformatics", "duration": "3 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 with Physics, Chemistry, Mathematics/Biology.",
-            "highlights": "Computational biology, genomics, and programming for biological data.",
-            "why_join": "Join the cutting-edge field combining biology and computer science."
-        },
-        {
-            "name": "BA Journalism and Mass Communication", "duration": "3 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "Pass in 10+2 or equivalent.",
-            "highlights": "Media studios, digital journalism, public relations, and film production.",
-            "why_join": "Develop excellent communication skills for media, broadcasting, and corporate communications."
-        },
-        {
-            "name": "M.Tech Computer Science and Engineering", "duration": "2 Years", "fee": "Contact Admissions", "deadline": "August 2026",
+            "name": "M.Tech. Computer Science and Engineering",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
             "eligibility": "B.E/B.Tech in relevant branch with minimum 50% marks. PGCET/GATE score required.",
-            "highlights": "Advanced research in AI, Machine Learning, and Network Security.",
-            "why_join": "Specialized knowledge for higher-level R&D and academic roles."
+            "highlights": "Advanced research in computing, distributed systems, and computer networks.",
+            "why_join": "Excellent academic path leading to R&D and Ph.D. opportunities."
         },
         {
-            "name": "MBA (Master of Business Administration)", "duration": "2 Years", "fee": "Contact Admissions", "deadline": "August 2026",
+            "name": "Ph.D. in Engineering (Full-Time/Part-Time)",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in engineering/technology with minimum 55% marks (50% for SC/ST).",
+            "highlights": "School of Computer Science and Engineering research programmes.",
+            "why_join": "700+ Ph.D. scholars, 20+ research facilities, and 1000+ patents filed."
+        },
+        
+        # --- School of Electrical and Electronics Engineering ---
+        {
+            "name": "B.Tech. Electrical and Electronics Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks.",
+            "highlights": "Offered by School of Electrical and Electronics Engineering. Cover electric grids, renewable energy, and power systems.",
+            "why_join": "Excellent placement opportunities in energy, EV companies, and power distribution sectors."
+        },
+        {
+            "name": "M.Tech. Power Electronics",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in EEE/ECE/EIE with minimum 50% marks.",
+            "highlights": "Electrical power conversion, microgrids, and electric vehicle drives.",
+            "why_join": "Focus on green tech and smart grid integration."
+        },
+        {
+            "name": "Ph.D. in Electrical and Electronics Engineering",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Electrical/Electronics Engineering or allied disciplines with minimum 55% marks (50% for SC/ST).",
+            "highlights": "Offered by School of Electrical and Electronics Engineering. Research areas: Power Systems, Power Electronics, Microgrids, Electric Vehicles.",
+            "why_join": "Access to advanced laboratories, 700+ Ph.D. scholars, and 20+ research facilities."
+        },
+        
+        # --- School of Electronics and Communication Engineering ---
+        {
+            "name": "B.Tech. Electronics and Communication Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics as compulsory subjects. Minimum 45% marks.",
+            "highlights": "Offered by School of Electronics and Communication Engineering. NBA Accredited. Covers VLSI, Embedded Systems, and IoT.",
+            "why_join": "Highly modern labs. Core placement opportunities with firms like Intel, Texas Instruments, and Qualcomm."
+        },
+        {
+            "name": "B.Tech. Electronics and Computer Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics. Minimum 45% marks.",
+            "highlights": "Combines electronic circuits and computer systems engineering.",
+            "why_join": "School of Electronics and Communication Engineering. Excellent cross-disciplinary program."
+        },
+        {
+            "name": "B.Tech. Robotics and Artificial Intelligence",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics. Minimum 45% marks.",
+            "highlights": "Focus on automation, sensors, actuators, and AI integration for robotics.",
+            "why_join": "State-of-the-art AR/VR and Idea labs. Emerging domain in industrial automation."
+        },
+        {
+            "name": "M.Tech. VLSI Design and Embedded Systems (Full-Time/Part-Time)",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in relevant branch with 50% marks.",
+            "highlights": "Advanced VLSI design, semiconductor testing, and embedded software.",
+            "why_join": "Highly sought-after specialisation with high packages in tech companies."
+        },
+        {
+            "name": "M.Tech. Digital Communication and Networking",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in ECE/Telecommunication with 50% marks.",
+            "highlights": "High-speed networks, wireless communication, and RF systems.",
+            "why_join": "Prepares for telecommunication sector R&D."
+        },
+        {
+            "name": "Ph.D. in Electronics and Communication Engineering",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Electronics & Communication Engineering or allied disciplines with minimum 55% marks (50% for SC/ST).",
+            "highlights": "Offered by School of Electronics and Communication Engineering. Research areas: VLSI, Embedded Systems, Digital Communication, Signal Processing.",
+            "why_join": "Strong collaboration with industry partners, state-of-the-art laboratory infrastructure."
+        },
+        
+        # --- School of Civil Engineering ---
+        {
+            "name": "B.Tech. Civil Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Mathematics, and Chemistry. Minimum 45% marks.",
+            "highlights": "Offered by School of Civil Engineering. Focus on smart structures, surveying, and materials.",
+            "why_join": "Excellent surveying labs, software tools, and design modules."
+        },
+        {
+            "name": "M.Tech. Computer Aided Structural Engineering",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in Civil Engineering with 50% marks.",
+            "highlights": "Advanced structural modeling, concrete design, and seismic analysis.",
+            "why_join": "Specialized course for structural designers."
+        },
+        {
+            "name": "M.Tech. Transportation Engineering and Management",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in Civil Engineering with 50% marks.",
+            "highlights": "Highway planning, traffic engineering, and transport economics.",
+            "why_join": "Focus on smart transportation infrastructure."
+        },
+        {
+            "name": "M.Tech. Construction Technology and Management",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in Civil / Architecture with 50% marks.",
+            "highlights": "Project management, building materials, and construction safety.",
+            "why_join": "Prepares for corporate infrastructure leadership roles."
+        },
+        {
+            "name": "Ph.D. in Civil Engineering",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Civil Engineering or allied disciplines with minimum 55% marks (50% for SC/ST).",
+            "highlights": "Offered by School of Civil Engineering. Research areas: Structural Engineering, Transportation, Geotechnical, Construction Management.",
+            "why_join": "Advanced software modeling tools and civil engineering test facilities."
+        },
+        
+        # --- Department of Agricultural Engineering ---
+        {
+            "name": "B.Tech. Agricultural Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Chemistry, and Mathematics. Minimum 45% marks.",
+            "highlights": "Offered by Department of Agricultural Engineering. Cover farm machinery, irrigation, and food processing.",
+            "why_join": "Highly relevant for tech-enabled modern agriculture sectors."
+        },
+        
+        # --- School of Mechanical Engineering ---
+        {
+            "name": "B.Tech. Mechanical Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Mathematics, and Chemistry. Minimum 45% marks.",
+            "highlights": "Offered by School of Mechanical Engineering. NBA Accredited. Focus on thermodynamics, manufacturing, and design.",
+            "why_join": "Access to advanced CAD/CAM and Fab Labs. Excellent placement records in manufacturing industries."
+        },
+        {
+            "name": "B.Tech. Mechatronics Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Mathematics, and Chemistry. Minimum 45% marks.",
+            "highlights": "Combines mechanical systems, electronics, control systems, and software.",
+            "why_join": "Prepares for modern automated manufacturing, robotics, and aerospace industries."
+        },
+        {
+            "name": "B.Tech. Aerospace Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Chemistry, and Mathematics. Minimum 45% marks.",
+            "highlights": "Focus on aerodynamics, propulsion, aircraft structure, and flight mechanics.",
+            "why_join": "Advanced software tools and aerospace lab components."
+        },
+        {
+            "name": "M.Tech. Machine Design",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.E/B.Tech in Mechanical Engineering with 50% marks.",
+            "highlights": "Stress analysis, vibrations, and mechanical design methodologies.",
+            "why_join": "Prepares for design departments of major automotive and manufacturing firms."
+        },
+        {
+            "name": "Ph.D. in Mechanical Engineering",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Mechanical Engineering or allied disciplines with minimum 55% marks (50% for SC/ST).",
+            "highlights": "Offered by School of Mechanical Engineering. Research areas: Machine Design, Thermal Engineering, Materials Science, Robotics & Mechatronics.",
+            "why_join": "Access to advanced CAD/CAM labs and Fab Labs, 1000+ patents filed."
+        },
+        
+        # --- School of Design Engineering ---
+        {
+            "name": "B.Tech. Design Engineering",
+            "duration": "4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics and Mathematics. Minimum 45% marks.",
+            "highlights": "Offered by School of Design Engineering. Combines functional design with engineering parameters.",
+            "why_join": "State-of-the-art design studios and workshops."
+        },
+
+        # --- Faculty of Architecture ---
+        {
+            "name": "B.Arch. (Bachelor of Architecture)",
+            "duration": "5 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with PCM (50% marks) or 10+3 Diploma with Mathematics. Valid NATA score required.",
+            "highlights": "Offered by School of Architecture. Design studios, modeling workshops, and environment-friendly concepts.",
+            "why_join": "Recognized by Council of Architecture (COA). Focus on digital architecture and sustainability."
+        },
+        {
+            "name": "B.Sc. Interior Design",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
+            "highlights": "Residential design, commercial interior architecture, and materials.",
+            "why_join": "School of Architecture. Excellent creative infrastructure."
+        },
+        {
+            "name": "M.Arch. Digital Architecture",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.Arch degree with minimum 50% marks.",
+            "highlights": "Digital fabrication, computation design, and building physics.",
+            "why_join": "Prepares for advanced global architecture practices."
+        },
+        {
+            "name": "Ph.D. in Architecture",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Architecture (M.Arch) or allied design fields with minimum 55% marks.",
+            "highlights": "Offered by School of Architecture. Focus on sustainable architecture, urban design, and digital fabrication.",
+            "why_join": "Approved by Council of Architecture (COA) guidelines."
+        },
+
+        # --- Faculty of Law ---
+        {
+            "name": "B.A. LL.B. (Honours)",
+            "duration": "5 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent with minimum 45% marks (40% for SC/ST). CLAT/LSAT score preferred.",
+            "highlights": "School of Legal Studies. Moot courts, legal aid clinics, and corporate internships.",
+            "why_join": "Comprehensive legal education recognized by the Bar Council of India (BCI)."
+        },
+        {
+            "name": "BBA LL.B. (Honours)",
+            "duration": "5 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent with minimum 45% marks (40% for SC/ST).",
+            "highlights": "Integration of business administration modules with corporate law.",
+            "why_join": "Ideal for corporate legal counsel and regulatory roles."
+        },
+        {
+            "name": "LL.M. in Criminology / Business and Corporate Law",
+            "duration": "1 Year",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "LL.B. degree from a recognized university with minimum 50% marks.",
+            "highlights": "Research-intensive, expert seminars, and dissertation work.",
+            "why_join": "Fast-track legal specialization."
+        },
+        {
+            "name": "Ph.D. in Legal Studies",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Law (LL.M.) with minimum 55% marks.",
+            "highlights": "Offered by School of Legal Studies. Research areas: Constitutional Law, Business Law, Criminology, Human Rights.",
+            "why_join": "Moot courts and corporate internship linkages."
+        },
+
+        # --- Faculty of Commerce and Management Studies ---
+        {
+            "name": "B.Com. / B.Com. Honours / Honours with Research",
+            "duration": "3-4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
+            "highlights": "School of Commerce. Specialisations: Professional (with CA Coaching), International Accounting & Finance (with ACCA), Corporate Finance & Analytics (with US-CMA in association with ISDC).",
+            "why_join": "Global curriculum integration. Major/Minor combinations: Accounting and Fin-Tech, Finance and Data Analysis, Economics and Taxation."
+        },
+        {
+            "name": "M.Com. (Dual Specialisations)",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.Com/BBA/BBS degree with minimum 50% marks.",
+            "highlights": "Combinations: Accounting & Finance, Finance & Taxation, Banking & HR, Taxation & Accounting, IB & Entrepreneurship, Banking & Capital Markets, IB & HR.",
+            "why_join": "Prepares for corporate finance, banking, and academic paths."
+        },
+        {
+            "name": "Ph.D. in Commerce",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Commerce (M.Com.) or allied fields with minimum 55% marks.",
+            "highlights": "Offered by School of Commerce. Focus on accounting, corporate finance, taxation, and international business.",
+            "why_join": "Strong academic foundation and industry research exposure."
+        },
+        {
+            "name": "BBA (Logistics / Aviation / Retail / Majors & Minors)",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
+            "highlights": "School of Management Studies. Specialisations: Aviation Management, Retail Management, Logistics and Supply Chain Management. Majors/Minors: Human Resource & Psychology, Marketing & International Business.",
+            "why_join": "Prepares for logistics, airlines, corporate sectors with industry internships."
+        },
+        {
+            "name": "BMS (Bachelor of Management Studies)",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
+            "highlights": "Strategic management, analytical business methods, and presentation skills.",
+            "why_join": "School of Management Studies. Strong base for MBA."
+        },
+        {
+            "name": "Ph.D. in Management (School of Management Studies)",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Business Administration (MBA) or equivalent with minimum 55% marks.",
+            "highlights": "Offered by School of Management Studies. Specialisations: Strategic Brand Management, Business Analytics, Hospital and Healthcare Management, Finance and Banking, Entrepreneurship and Family Business Management.",
+            "why_join": "Access to advanced research tools and business datasets."
+        },
+        {
+            "name": "MBA (Master of Business Administration - Dual Specialisations)",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
             "eligibility": "Bachelor's degree with minimum 50% marks. Valid MAT/CAT/PGCET score required.",
-            "highlights": "Case-study methodology, industry internships, and global exposure programs.",
-            "why_join": "Accelerate career growth into executive and leadership positions."
+            "highlights": "Offered by REVA Business School. Dual Specialisations: Finance, Marketing, HR, Fin-tech and Business Analytics, Operations, International Business.",
+            "why_join": "Case-study methodologies, extensive mock interviews, industry internship, and placement assistance with EY, PwC, Deloitte, IBM."
         },
         {
-            "name": "MCA (Master of Computer Applications)", "duration": "2 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "BCA/B.Sc/B.Com/BA with Mathematics at 10+2 or degree level. Minimum 50% marks.",
-            "highlights": "Advanced software development, AI integration, and cloud architecture.",
-            "why_join": "Master advanced computing concepts for high-paying IT roles."
+            "name": "Ph.D. in Management (REVA Business School)",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Business Administration (MBA) or equivalent with minimum 55% marks.",
+            "highlights": "Offered by REVA Business School. Areas: Banking and Insurance, Healthcare Management, Strategy and Leadership, Entrepreneurship and Family Business Management, Sustainability and Business Innovation.",
+            "why_join": "Member of AACSB Business Education Alliance, focus on global business models."
+        },
+
+        # --- Faculty of Liberal Studies ---
+        {
+            "name": "M.A. English",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Bachelor's degree with English as a major/compulsory subject with 50% marks.",
+            "highlights": "Department of Languages. Lit studies, linguistics, and creative writing.",
+            "why_join": "Prepares for writing, journalism, and academic roles."
         },
         {
-            "name": "LL.M (Master of Laws)", "duration": "1 Year", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "LL.B degree with minimum 50% marks.",
-            "highlights": "Specializations in Corporate Law and Criminal Law. Research-focused.",
-            "why_join": "Advanced legal specialization for academia, judiciary, or specialized practice."
+            "name": "Ph.D. in English",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in English Literature (M.A. English) with minimum 55% marks.",
+            "highlights": "Offered by Department of Languages. Research areas: Linguistics, Comparative Literature, Cultural Studies.",
+            "why_join": "Interdisciplinary environment and publication assistance."
         },
         {
-            "name": "M.Sc. Biotechnology", "duration": "2 Years", "fee": "Contact Admissions", "deadline": "August 2026",
-            "eligibility": "B.Sc with relevant life science subjects. Minimum 50% marks.",
-            "highlights": "Molecular biology research, industrial biotechnology, and bioethics.",
-            "why_join": "Deepen scientific expertise for advanced research and biotech industry roles."
+            "name": "School of Geopolitics and Public Policy (B.A. / M.A.)",
+            "duration": "2-4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.A. Political Science (Honours & Research with Minors - 4 years): Pass 10+2. M.A. International Relations & Strategic Studies (2 years): Graduate with 50% marks.",
+            "highlights": "Strategic studies, national security, foreign policy, and administrative structures.",
+            "why_join": "Prepares for think-tanks, government jobs, public services, and political consultancy."
+        },
+        {
+            "name": "School of Psychological and Behavioral Sciences (B.Sc. / B.Psy. / M.Sc.)",
+            "duration": "2-4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.Sc/B.Psy (4 years): 10+2 pass. M.Sc Clinical Psychology / Psychology (2 years): B.Sc in Psychology with 50% marks.",
+            "highlights": "Clinical psychology, counseling techniques, psychometrics, economics minors.",
+            "why_join": "Dedicated counseling labs and research scopes."
+        },
+        {
+            "name": "Ph.D. in Psychology",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Psychology (M.Sc. Clinical Psychology / Psychology) with minimum 55% marks.",
+            "highlights": "Offered by School of Psychological and Behavioral Sciences. Research in Clinical, Cognitive, and Behavioral Psychology.",
+            "why_join": "Access to dedicated counseling and psychological testing laboratories."
+        },
+        {
+            "name": "School of Communication and Media Enterprise (B.Sc. / M.A.)",
+            "duration": "2-4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.Sc Integrated Marketing Communication and Advertising (4 Years): 10+2. M.A. Journalism and Communication (2 years): Graduate with 50%.",
+            "highlights": "Advanced media studios, digital advertising, PR campaign designing.",
+            "why_join": "Focuses on media enterprise, corporate branding, and public communication."
+        },
+        {
+            "name": "Ph.D. in Communication and Journalism",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Journalism, Mass Communication, or Media Studies with minimum 55% marks.",
+            "highlights": "Offered by School of Communication and Media Enterprise. Research areas: Digital Media, Integrated Marketing, PR, Media Ethics.",
+            "why_join": "Access to modern media studios and production suites."
+        },
+        {
+            "name": "School of Performing Arts and Indic Studies (B.A. / M.P.A.)",
+            "duration": "2-4 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.A. Performing Arts (with Dual Minors: Psychology, English, or Marketing): 10+2. M.P.A (2 years): BPA/Graduate with training in dance/music.",
+            "highlights": "Bharatanatyam, Yakshagana, Kathak, Kuchipudi, Mohiniyattam, Carnatic Music, Hindustani Music.",
+            "why_join": "Preserving classical traditions with modern performance and Indic research studies."
+        },
+        {
+            "name": "School of Performing Arts and Indic Studies (Diploma / Disciplines)",
+            "duration": "1-2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent with basic training in classical dance or music.",
+            "highlights": "Disciplines offered: Bharatanatyam, Yakshagana, Kathak, Kuchipudi, Mohiniyattam, Carnatic Music, Hindustani Music.",
+            "why_join": "Comprehensive training under expert gurus and artists."
+        },
+        {
+            "name": "Ph.D. in Performing Arts",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Performing Arts (M.P.A.) or allied field with minimum 55% marks.",
+            "highlights": "Offered by School of Performing Arts and Indic Studies. Research in Indian Classical Dance, Music, and theatre traditions.",
+            "why_join": "Preserving traditional performing arts with structured scientific inquiry."
+        },
+        {
+            "name": "General Minor Programmes (Liberal Studies)",
+            "duration": "Varies",
+            "fee": "Contact Admissions",
+            "deadline": "August 2026",
+            "eligibility": "Undergraduate students in Liberal Studies.",
+            "highlights": "Group I Minors: Psychology and Business, Economics and Policy Advocacy, Journalism and Communication.",
+            "why_join": "Group II Minors: English and Creative Writing, Script Writing, Theatre, Entrepreneurship, Data Science, Polity and Public Policy, Nutrition and Dietetics, Event Management."
+        },
+
+        # --- Faculty of Science and Technology (CS & Applications) ---
+        {
+            "name": "BCA (Bachelor of Computer Applications)",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent from a recognized board.",
+            "highlights": "Programming in Python/Java, Web Development, Database Management, and Mobile Apps.",
+            "why_join": "School of Computer Science and Applications. High placement rates in software companies."
+        },
+        {
+            "name": "BCA - Artificial Intelligence and Machine Learning",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent.",
+            "highlights": "Specialized BCA track focused on AI modules, ML libraries, and neural networks.",
+            "why_join": "Combines standard software skills with specialized AI domains."
+        },
+        {
+            "name": "BCA - Cyber Security and Ethical Hacking",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent.",
+            "highlights": "Defensive security, encryption, penetration testing, and ethical hacking protocols.",
+            "why_join": "High demand in network administration and secure enterprise software development."
+        },
+        {
+            "name": "B.Sc. Computer Science (Cloud Computing / Cyber Security)",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Mathematics/Computer Science as a subject.",
+            "highlights": "AWS/Azure platforms, big data management, information security systems.",
+            "why_join": "School of Computer Science and Applications. Modern computing labs."
+        },
+        {
+            "name": "B.Sc. Multimedia and Animation",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 or equivalent.",
+            "highlights": "3D modeling, texturing, digital sketching, gaming engines, and visual effects.",
+            "why_join": "Equipped with state-of-the-art animation workstations."
+        },
+        {
+            "name": "MCA (Master of Computer Applications)",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "BCA/B.Sc/B.Com/B.A with Mathematics at 10+2 or graduation level. Minimum 50% marks.",
+            "highlights": "Full-stack development, cloud microservices, big data, and system design.",
+            "why_join": "Accredited by NAAC A+. Placement assistance with companies like Dell, Accenture, Juspay."
+        },
+        {
+            "name": "M.Sc. Data Science",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.Sc with Mathematics/Statistics/Computer Science as major. Minimum 50% marks.",
+            "highlights": "Machine learning, mathematical statistical modeling, Python, and R programming.",
+            "why_join": "Excellent path for data analysts and ML researchers."
+        },
+        {
+            "name": "M.Sc. Computer Science",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "B.Sc in Computer Science/BCA with minimum 50% marks.",
+            "highlights": "Advanced algorithms, network protocols, and software testing.",
+            "why_join": "Prepares for higher-level system development and academic research."
+        },
+        {
+            "name": "Ph.D. in Computer Science and Applications",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Computer Applications (MCA), Data Science, or Computer Science with minimum 55% marks.",
+            "highlights": "Offered by School of Computer Science and Applications. Research areas: Artificial Intelligence, Machine Learning, Cloud Computing, Cybersecurity.",
+            "why_join": "Modern computational labs and resources."
+        },
+
+        # --- Faculty of Science and Technology (Applied Sciences) ---
+        {
+            "name": "School of Applied Sciences (B.Sc. Combinations)",
+            "duration": "3 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Chemistry, and Biology/Mathematics.",
+            "highlights": "Combinations: Biotechnology/Biochemistry/Genetics; Microbiology/Chemistry/Genetics (MCG); Bioinformatics/Statistics/CS; Physics/Maths/CS; Statistics/CS/Maths.",
+            "why_join": "Fully equipped laboratory setup. Practical research projects on biology and data analytics."
+        },
+        {
+            "name": "School of Applied Sciences (M.Sc. / Ph.D. Disciplines)",
+            "duration": "2-5 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Graduate in relevant sciences with minimum 50% marks. Ph.D requires Master's with minimum 55% marks.",
+            "highlights": "Fields: Biotechnology, Chemistry, Mathematics, Physics, Microbiology, Bioinformatics.",
+            "why_join": "700+ Ph.D. scholars, 20+ research facilities. High research output."
+        },
+
+        # --- School of Allied Health Sciences ---
+        {
+            "name": "School of Allied Health Sciences B.Sc. / BMLS / BMRIT / BND / BPT",
+            "duration": "3-4.5 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Pass in 10+2 with Physics, Chemistry, and Biology/Mathematics. BPT (Physiotherapy) is 4.5 years.",
+            "highlights": "Bachelor of Medical Laboratory Science (BMLS); Bachelor in Medical Radiology & Imaging Technology (BMRIT); Bachelor of Nutrition & Dietetics (BND); B.Sc. Sports & Exercise Science; BPT (Physiotherapy).",
+            "why_join": "Practical hospital tie-ups, advanced clinical labs, and health diagnostics training."
+        },
+        {
+            "name": "School of Allied Health Sciences M.Sc. / Masters",
+            "duration": "2 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Graduate in biochemistry/nutrition/sports science with minimum 50% marks.",
+            "highlights": "M.Sc. Biochemistry; M.Sc. Sports Biomechanics; Masters of Nutrition and Dietetics.",
+            "why_join": "Careers in clinical diagnostics, sports coaching centers, and nutrition consulting."
+        },
+        {
+            "name": "Ph.D. in Biochemistry",
+            "duration": "3-6 Years",
+            "fee": "Contact admissions@reva.edu.in",
+            "deadline": "August 2026",
+            "eligibility": "Master's degree in Biochemistry or allied life sciences with minimum 55% marks.",
+            "highlights": "Offered by School of Allied Health Sciences. Research areas: Clinical Biochemistry, Sports Nutrition, Metabolism.",
+            "why_join": "Advanced laboratory equipment and medical research tie-ups."
         }
     ]
-    
+
     os.makedirs("data", exist_ok=True)
     
     with open("data/raw_courses.json", "w", encoding="utf-8") as f:

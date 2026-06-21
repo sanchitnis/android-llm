@@ -1,0 +1,5 @@
+- [x] Specify Multiplatform Code-Sharing Model (commonMain vs desktopMain) in WINDOWS-ARCHITECTURE.md <!-- id: win_p13_01 -->
+- [x] Define Windows Database Seeding & dynamic update copying path in WINDOWS-ARCHITECTURE.md <!-- id: win_p13_02 -->
+- [x] Detail Desktop Thread Dispatching and native context switching flow in WINDOWS-ARCHITECTURE.md <!-- id: win_p13_03 -->
+- [x] Update tasks/TASKS.md active tasks board for Phase 13 <!-- id: win_p13_04 -->
+- [x] Run Critique & Verification passes on the specs updates <!-- id: win_p13_05 -->

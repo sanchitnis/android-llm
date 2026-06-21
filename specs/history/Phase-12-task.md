@@ -1,0 +1,7 @@
+- [x] Detail LiteRT dynamic linkage & JNI mappings in WINDOWS-ARCHITECTURE.md <!-- id: win_p12_01 -->
+- [x] Define DirectML delegate configuration & DX12 requirements in WINDOWS-ARCHITECTURE.md <!-- id: win_p12_02 -->
+- [x] Specify Cloud API integration & fallback trigger mechanics in WINDOWS-ARCHITECTURE.md <!-- id: win_p12_03 -->
+- [x] Define CPU XNNPACK threading & optimization variables in WINDOWS-ARCHITECTURE.md <!-- id: win_p12_04 -->
+- [x] Build Memory Allocation & RAM Budget Table in WINDOWS-ARCHITECTURE.md <!-- id: win_p12_05 -->
+- [x] Update tasks/TASKS.md active tasks board for Phase 12 <!-- id: win_p12_06 -->
+- [x] Run Critique & Verification loops on the spec updates <!-- id: win_p12_07 -->
